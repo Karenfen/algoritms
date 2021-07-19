@@ -2,6 +2,7 @@
 // created from Code Blocks
 
 #include <cstdlib>
+#include <iostream>
 
 bool primeNumb (int a){
     bool isPrime = 1;
@@ -19,13 +20,13 @@ int main (const int argc, const char**argv){
 
 int num;
 
-printf("inter a number for check: ");
-scanf("%d", &num);
+std::cout << "inter a number for check: ";
+std::cin >> num;
 
 if(primeNumb(num)){
-    printf("number %d is prime\n", num);
+    std::cout << "number " << num <<  " is prime." << std::endl;
 }else{
-   printf("number %d is not prime\n", num);
+    std::cout << "number " << num <<  " is not prime." << std::endl;
 }
 
 return 0;
