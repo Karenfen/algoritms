@@ -71,7 +71,7 @@ void qSort(int* arr, int first, int last){
 }
 
 // Функция блочной сортировки.
-void bSort(int* arr, int len){
+void bSort(int* arr, const int len){
     const int max = len;
     const int b = 10;
 
