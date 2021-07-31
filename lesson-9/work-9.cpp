@@ -24,6 +24,19 @@ void init(){
     items = 0;
 }
 
+void printQ(){
+    for(int i = 0; i < SZ; i++){
+        if(ARR[i] == NULL){
+            std::cout << "[*, *] ";
+        }else{
+            printf("[%d, %d] ", ARR[i]->pr, ARR[i]->dat);
+        }
+    }
+    std::cout << std::endl;
+}
+
+// TASK-1 =================================
+
 void insert(int pr, int dat){
     Node* element = (Node*)malloc(sizeof(Node));
     element->pr = pr;
@@ -77,19 +90,13 @@ Node* remove(){
     }
 }
 
-void printQ(){
-    for(int i = 0; i < SZ; i++){
-        if(ARR[i] == NULL){
-            std::cout << "[*, *] ";
-        }else{
-            printf("[%d, %d] ", ARR[i]->pr, ARR[i]->dat);
-        }
-    }
-    std::cout << std::endl;
-}
+// TASK-2 =================================
+
+
 
 int main (const int argc, const char** argv){
-/// TASK - 1 ------------------------
+/// TASK-1 ------------------------
+
     init();
     printQ();
     insert(8, 13);
@@ -114,6 +121,8 @@ int main (const int argc, const char** argv){
     insert(5, 16);
     insert(7, 16);
     printQ();
+
+// TASK-2 -----------------------------
 
     system("pause");
     return 0;
