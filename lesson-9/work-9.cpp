@@ -4,6 +4,9 @@
 #include <iostream>
 
 #define SZ 10
+#define SIZE 100
+#define true 1==1
+#define false 1!=1
 
 typedef struct{
     int pr;
@@ -91,11 +94,51 @@ Node* remove(){
 }
 
 // TASK-2 =================================
+    typedef int boolean;
 
+    int stack[SIZE] = {0};
+    int cursor = -1;
 
+boolean push(int data){
+    if (cursor < SIZE){
+        stack[++cursor] = data;
+        return true;
+    }else {
+        std::cout << "Stack overflow!" << std::endl;
+        return false;
+    }
+}
+
+int pop(){
+    if(cursor != -1){
+        return stack[cursor--];
+    }else{
+        std::cout << "Stack is empty!" << std::endl;
+    }
+}
+
+void bynary(int n){
+    std::cout << "Binary form of number " << n << " : " << std::endl;
+
+    if (n == 0){
+        std::cout << 0 << std::endl;
+    }
+
+    while (n > 0){
+        push(n % 2);
+        n /=2;
+    }
+
+    while (cursor != -1){
+        printf("%2d", pop());
+    }
+
+    std::cout << std::endl;
+}
 
 int main (const int argc, const char** argv){
 /// TASK-1 ------------------------
+    std::cout << "TASK-1 ------------------------" << std::endl;
 
     init();
     printQ();
@@ -123,6 +166,14 @@ int main (const int argc, const char** argv){
     printQ();
 
 // TASK-2 -----------------------------
+    std::cout << "TASK-2 ------------------------" << std::endl;
+
+    int num;
+
+    std::cout << "Inter a number: ";
+    std::cin >> num;
+    
+    bynary(num);
 
     system("pause");
     return 0;
