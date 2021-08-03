@@ -2,6 +2,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <cstring>
 
 #define Q int
 #define COPY_LIST copy
@@ -42,14 +43,14 @@ void insertNode (List *lst, Q data){
     lst->size++;
 }
 
-Node* removeNode (List *lst, Q val){
+Node* removeVal (List *lst, Q val){
     if (lst->head == NULL){
         cout << "ERROR! List is empty!" << endl;
         return NULL;
     }
 
     Node *current = lst->head;
-    Node *previous;
+    Node *previous = NULL;
 
     while (current->next != NULL && current->date != val) {
         previous = current;
@@ -57,19 +58,19 @@ Node* removeNode (List *lst, Q val){
     }
 
     if (current->date != val) {
-        printf("ERROR! Node with value %d is not in the list!\n", val);
+        cout << "ERROR! Node with value (" << val << ") is not deleted!" << endl;
         return NULL;
     }
 
     if (current == lst->head){
        lst->head = current->next;
        lst->size--;
-       printf("Node with value %d is deleted!\n", val);
+       cout << "Node with value (" << val << ") is deleted!" << endl;
        return current;
     } else {
         previous->next = current->next;
         lst->size--;
-        printf("Node with value %d is deleted!\n", val);
+        cout << "Node with value (" << val << ") is deleted!" << endl;
         return current;
     }
 }
@@ -83,7 +84,7 @@ void printNode (Node *N){
     printf("[%d] ", N->date);
     return;
 }
-
+    
 void printList (List *lst){
     if (lst->head == NULL){
         cout << "List is empty!" << endl;
@@ -95,7 +96,7 @@ void printList (List *lst){
 
     do {
         printNode(current);
-        cout << "-> ";
+        cout << "<-> ";
         current = current->next;
     } while (current != NULL);
 
@@ -104,6 +105,64 @@ void printList (List *lst){
 }
 
 // Task-1 ====================================
+
+void removeNode (List* lst, Node* element) {
+    if (lst->head == element) {
+        lst->head = element->next;
+        free(element);
+        return;
+    } else {
+        Node* curent = lst->head;
+        Node* previous = NULL;
+
+        while (curent != element){
+            previous = curent;
+            curent = curent->next;
+        }
+        previous->next = curent->next;
+        curent = NULL;
+        free(element);
+        return;
+    }
+}
+
+bool checkBrackets (char alg[]){
+    List* lst = (List*) malloc (sizeof(List));
+    int i = 0;
+
+    while (alg[i] != '\0') {
+        if (alg[i] == '(' || alg[i] == ')' || alg[i] == '[' || alg[i] == ']' || alg[i] == '{' || alg[i] == '}') {
+            insertNode(lst, alg[i]);
+        }
+        i++;
+    }
+
+    if (lst->size < 2) {
+        free(lst);
+        return false;
+    } else {
+        Node* curent = lst->head;
+
+        while (curent->next != NULL) {
+            if ((curent->date == 40 && curent->next->date == 41) || (curent->date == 91 && curent->next->date == 93) || (curent->date == 123 && curent->next->date == 125)) {
+                removeNode(lst, curent->next);
+                removeNode(lst, curent);
+                lst->size -= 2;
+                curent = lst->head;
+                continue;
+            }
+            curent = curent->next;
+        }
+        
+        if (lst->size == 0) {
+            free(lst);
+            return true;
+        } else {
+            free(lst);
+            return false;
+        }
+    }
+}
 
 // Task-2 ====================================
 
@@ -173,15 +232,22 @@ int main (const int argc, const char** argv){
     insertNode(lst, 10);
     insertNode(lst, 7);
     printList(lst);    
-    free(removeNode(lst, 20));
+    free(removeVal(lst, 20));
     printList(lst);
-    free(removeNode(lst, 20));
+    free(removeVal(lst, 20));
     printList(lst);
     
 
 // Task-1 ====================================
 cout << "|| Task-1 ====================================" << endl;
 
+    char algebra[] = "( 4 + 5) * [ 5 - 2]";
+
+    if (checkBrackets(algebra)){
+        cout << "Brackets are placed correctly!" << endl;
+    } else {
+        cout << "Brackets are placed not correctly!" << endl;
+    }
     
 // Task-2 ====================================
 cout << "|| Task-2 ====================================" << endl;
