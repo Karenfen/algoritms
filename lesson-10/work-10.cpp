@@ -74,7 +74,7 @@ Node* removeNode (List *lst, Q val){
     }
 }
 
-void printNode(Node *N){
+void printNode (Node *N){
     if (N == NULL){
         cout << "[] ";
         return;
@@ -107,7 +107,7 @@ void printList (List *lst){
 
 // Task-2 ====================================
 
-bool copyList(List* from_list, List* to_list){
+bool copyList (List* from_list, List* to_list){
     if (from_list->head == NULL){
         cout << "Origin list is empty!" << endl;
         return false;
@@ -130,41 +130,76 @@ bool copyList(List* from_list, List* to_list){
 
 // Task-3 ====================================
 
+bool chekList (List* lst){
+    if (lst->size < 2) {
+        cout << "Few nodes to check!" << endl;
+        return false;
+    } else {
+        Node* current = lst->head;
+
+        while (current->next != NULL && current->date <= current->next->date)
+        {
+            current = current->next;
+        }
+        
+        if (current->next == NULL){
+            return true;
+        } else {
+            current = lst->head;
+
+            while (current->next != NULL && current->date >= current->next->date)
+            {
+                current = current->next;
+            }
+
+            if (current->next == NULL) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+}
+
 int main (const int argc, const char** argv){
 
     List *lst = (List*)malloc(sizeof(List));
 
     initList(lst);
     printList(lst);
-    insertNode(lst, 21);
-    insertNode(lst, 5);
+    insertNode(lst, 20);
     insertNode(lst, 12);
-    insertNode(lst, 0);
-    insertNode(lst, 6);
+    insertNode(lst, 12);
+    insertNode(lst, 10);
+    insertNode(lst, 7);
     printList(lst);    
-    free(removeNode(lst, 5));
+    free(removeNode(lst, 20));
     printList(lst);
-    free(removeNode(lst, 21));
+    free(removeNode(lst, 20));
     printList(lst);
-    free(removeNode(lst, 5));
-    printList(lst);
+    
 
 // Task-1 ====================================
-cout << "// Task-1 ====================================" << endl;
+cout << "|| Task-1 ====================================" << endl;
+
+    
+// Task-2 ====================================
+cout << "|| Task-2 ====================================" << endl;
     List *COPY_LIST = (List*)malloc(sizeof(List));
     initList(COPY_LIST);
     
     if (copyList(lst, COPY_LIST)) {
         printList(COPY_LIST);
     }
-    
-// Task-2 ====================================
-cout << "// Task-2 ====================================" << endl;
-
 
 // Task-3 ====================================
-cout << "// Task-3 ====================================" << endl;
+cout << "|| Task-3 ====================================" << endl;
 
+    if (chekList(COPY_LIST)) {
+        cout << "The list  is sorted!" << endl;
+    } else {
+        cout << "The list  is not sorted!" << endl;
+    }
     system("pause");
     return 0;
 }
