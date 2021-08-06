@@ -26,6 +26,12 @@ void initList (List *lst){
 
 void insertNode (List *lst, Q data){
     Node *newNode = (Node*)malloc(sizeof(Node));
+
+    if (newNode == NULL) {
+        cout << "Stack overflow!" << endl;
+        return;
+    }
+
     newNode->date = data;
     newNode->next = NULL;
 
@@ -65,14 +71,13 @@ Node* removeVal (List *lst, Q val){
     if (current == lst->head){
        lst->head = current->next;
        lst->size--;
-       cout << "Node with value (" << val << ") is deleted!" << endl;
-       return current;
     } else {
         previous->next = current->next;
         lst->size--;
-        cout << "Node with value (" << val << ") is deleted!" << endl;
-        return current;
     }
+
+    cout << "Node with value (" << val << ") is deleted!" << endl;
+    return current;
 }
 
 void printNode (Node *N){
@@ -119,14 +124,14 @@ void removeNode (List* lst, Node* element) {
             curent = curent->next;
         }
         previous->next = curent->next;
-        free(curent);
+        free(element);
         lst->size--;
     }
 }
 
 void freeList (List* lst, Node* head) {
     if (lst->head == NULL){
-        free(lst);
+        return;
     } else if (head->next == NULL){
         removeNode(lst, head);
         return;
@@ -151,6 +156,7 @@ bool checkBrackets (string alg){
 
     if (stack->size < 2) {
         freeList(stack, stack->head);
+        free(stack);
         return false;
     } else {
         Node* curent = stack->head;
@@ -173,6 +179,7 @@ bool checkBrackets (string alg){
             return true;
         } else {
             freeList(stack, stack->head);
+            free(stack);
             return false;
         }
     }
@@ -235,6 +242,7 @@ bool chekList (List* lst){
 }
 
 int main (const int argc, const char** argv){
+cout << endl;
 
     List *lst = (List*)malloc(sizeof(List));
 
@@ -251,9 +259,9 @@ int main (const int argc, const char** argv){
     free(removeVal(lst, 20));
     printList(lst);
     
-
+cout << endl;
 // Task-1 ====================================
-cout << "|| Task-1 ====================================" << endl;
+cout << "|| Task-1 ====================================" << endl << endl;
 
     string algebra;
 
@@ -264,9 +272,10 @@ cout << "|| Task-1 ====================================" << endl;
     } else {
         cout << "Brackets are placed not correctly!" << endl;
     }
-    
+
+cout << endl;
 // Task-2 ====================================
-cout << "|| Task-2 ====================================" << endl;
+cout << "|| Task-2 ====================================" << endl << endl;
 
     List *COPY_LIST = (List*)malloc(sizeof(List));
     initList(COPY_LIST);
@@ -279,10 +288,14 @@ cout << "|| Task-2 ====================================" << endl;
     }
 
     freeList(lst, lst->head);
+    free(lst);
 
+cout << endl;
 // Task-3 ====================================
-cout << "|| Task-3 ====================================" << endl;
+cout << "|| Task-3 ====================================" << endl << endl;
 
+    printList(COPY_LIST);
+    
     if (chekList(COPY_LIST)) {
         cout << "The list  is sorted!" << endl;
     } else {
@@ -290,7 +303,9 @@ cout << "|| Task-3 ====================================" << endl;
     }
 
     freeList(COPY_LIST, COPY_LIST->head);
+    free(COPY_LIST);
 
+    cout << endl;
     system("pause");
     return 0;
 }
