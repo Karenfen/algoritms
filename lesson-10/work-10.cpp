@@ -40,11 +40,8 @@ void insertNode (List *lst, Q data){
         lst->size++;
     } else {
         Node *current = lst->head;
-
-        while (current->next != NULL){
-            current = current->next;
-        }
-        current->next = newNode;
+        newNode->next = current;
+        lst->head = newNode;
         lst->size++;
     }
 }
@@ -78,6 +75,21 @@ Node* removeVal (List *lst, Q val){
 
     cout << "Node with value (" << val << ") is deleted!" << endl;
     return current;
+}
+
+void removeAlllist (List *lst) {
+    if (lst->head == NULL) {
+        cout << "List is empty." << endl;
+    } else {
+        Node *current = lst->head;
+
+        while (lst->head != NULL) {
+            lst->head = current->next;
+            free(current);
+            current = lst->head;
+            lst->size--;
+        }
+    }
 }
 
 void printNode (Node *N){
@@ -194,11 +206,15 @@ bool copyList (List* from_list, List* to_list){
     }
 
     Node *current = from_list->head;
-    Node *previous;
+    int count = from_list->size;
 
-    while (current != NULL) {
+    while (count > 0) {
+        for (int i = 1; i < count; i++) {
+            current = current->next;
+        }
         insertNode(to_list, current->date);
-        current = current->next;
+        count--;
+        current = from_list->head; 
     }
     
     to_list->size = from_list->size;
